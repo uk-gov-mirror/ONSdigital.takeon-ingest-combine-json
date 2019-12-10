@@ -1,17 +1,34 @@
 import json
 import os
-from readextractbucket import run_process
-from writetoqueue import write_to_queue
+import boto3
+import requests
+from read_ingestion_bucket import run_process
+from write_to_queue import send_outcomes_to_queue, send_to_error_queue
 
 def lambda_handler(event, context):
+   lambdaName = "Ingest Combine JSON: "
+   business_layer_endpoint = os.getenv("BUSINESS_LAYER_ENDPOINT")
+   error_queue = os.getenv("ERROR_QUEUE_URL")
+   ingestion_output_queue = os.getenv("INGESTION_OUTPUT_QUEUE")
+
    try:
-      run_process()
-   except:
-      queue_url = os.getenv("ERROR_QUEUE_URL")
-      print("queue_url: " + queue_url)
-      msg = write_to_queue(queue_url, json.dumps("{\"Error\": \"Could not process files\""))
-      print(msg)
-      return "Error: could not process files"
+      post_json = run_process()
+      request_response = requests.post(business_layer_endpoint, json.dumps(post_json))
+      print('Response: ' + str(request_response))
+      print(request_response.text, "TEXT")
+      print(request_response.content, "CONTENT")
+      print(request_response.status_code, "STATUS CODE")
+      output_message = send_outcomes_to_queue(ingestion_output_queue, request_response)
+      print(output_message)
+   except Exception as error:
+      errorMessage = lambdaName + " Problem with call to Business Layer " + str(error)
+      send_to_error_queue(error_queue, errorMessage)
+      print(errorMessage)
+      print('Response: ' + str(request_response))
+      print(request_response.content, "CONTENT")
+      print(request_response.text, "TEXT")
+      print(request_response.status_code, "STATUS CODE")
+      return errorMessage
       
 
 

@@ -49,12 +49,14 @@ def combine_data(json):
  return final_dict
  
 def run_process():
- concatinate_json=[]
- files=list_files()
- for file in files:
-  json_output=read_file(file)
-  concatinate_json.append(combine_data(json.loads(json_output)))
-
- print(concatinate_json)
-
+  concatenate_json=[]
+  files=list_files()
+  for file in files:
+    json_output=read_file(file)
+    concatenate_json.append(combine_data(json.loads(json_output)))
+  
+  print(concatenate_json)
+  output_json = {}
+  output_json['batch_data'] = concatenate_json
+  return output_json
   
