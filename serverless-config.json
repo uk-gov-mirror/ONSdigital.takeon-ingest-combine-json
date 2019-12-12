@@ -4,4 +4,5 @@
 "BUSINESS_LAYER_ENDPOINT": "http://a182aa59f1bfa11ea9ad6060e32fa213-e3dad229cb0b084f.elb.eu-west-2.amazonaws.com:8088/response/saveBatchResponses/",
 "SECURITY_GROUP_ID": "sg-06fc64d77bd38bea1",
 "SUBNET_ID": "subnet-0cbc63301c37a86ca",
-"ERROR_QUEUE_URL": "https://sqs.eu-west-2.amazonaws.com/014669633018/TakeOn-Validation-HandledErrors"}
+"ERROR_QUEUE_URL": "https://sqs.eu-west-2.amazonaws.com/014669633018/TakeOn-Validation-HandledErrors",
+"INGESTION_OUTPUT_QUEUE": "https://sqs.eu-west-2.amazonaws.com/014669633018/TakeOn-Ingest-Outcome-Notification"}
