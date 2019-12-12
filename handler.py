@@ -18,7 +18,7 @@ def lambda_handler(event, context):
       print(request_response.text, "TEXT")
       print(request_response.content, "CONTENT")
       print(request_response.status_code, "STATUS CODE")
-      output_message = send_outcomes_to_queue(ingestion_output_queue, request_response)
+      output_message = send_outcomes_to_queue(ingestion_output_queue, str(request_response.content))
       print(output_message)
    except Exception as error:
       errorMessage = lambdaName + " Problem with call to Business Layer " + str(error)

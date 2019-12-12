@@ -26,7 +26,7 @@ def list_files():
 
 def read_file(filename):
  s3 = boto3.resource("s3")
- content_object= s3.Object(bucket, filename)
+ content_object = s3.Object(bucket, filename)
  json_content = content_object.get()['Body'].read().decode('utf-8')
  
  return json_content

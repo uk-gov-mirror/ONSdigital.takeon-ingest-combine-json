@@ -7,8 +7,7 @@ sqs_client = boto3.client('sqs')
 
 def send_outcomes_to_queue(queue_url, data):
     try:
-        msg = sqs_client.send_message(QueueUrl=queue_url,
-                                      MessageBody=data)
+        msg = sqs_client.send_message(QueueUrl=queue_url, MessageBody=data)
     except ClientError as e:
         print("Error in sending to queue: " + e)
         return None
