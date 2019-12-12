@@ -40,6 +40,7 @@ functions:
       INGEST_ZONE_QUEUE: ${file(./serverless-config.json):INGEST_ZONE_QUEUE}
       ERROR_QUEUE_URL: ${file(./serverless-config.json):ERROR_QUEUE_URL}
       BUSINESS_LAYER_ENDPOINT: ${file(./serverless-config.json):BUSINESS_LAYER_ENDPOINT}
+      INGESTION_OUTPUT_QUEUE : ${file(./serverless-config.json):INGESTION_OUTPUT_QUEUE}
     vpc:
       securityGroupIds:
         - ${file(./serverless-config.json):SECURITY_GROUP_ID}
