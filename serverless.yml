@@ -2,7 +2,7 @@
 #
 # For full config options, check the docs:
 #    docs.serverless.com
-service: combineJSONIngest # NOTE: update this with your service name
+service: takeon-combine-JSON-Ingest # NOTE: update this with your service name
 #app: your-app-name
 #tenant: your-tenant-name
 # You can pin your service to only deploy with a specific Serverless version
@@ -18,7 +18,7 @@ provider:
       - ${file(./serverless-config.json):SUBNET_ID}
   runtime: python3.7
   region: eu-west-2
-  stage: main
+  #stage: main
   deploymentBucket: takeon.validation.deployment
 package:
  exclude:
