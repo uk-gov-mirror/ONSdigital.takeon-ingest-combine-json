@@ -2,7 +2,7 @@
 #
 # For full config options, check the docs:
 #    docs.serverless.com
-service: takeon-combine-JSON-Ingest # NOTE: update this with your service name
+service: takeon-combine-json-ingest # NOTE: update this with your service name
 #app: your-app-name
 #tenant: your-tenant-name
 # You can pin your service to only deploy with a specific Serverless version
