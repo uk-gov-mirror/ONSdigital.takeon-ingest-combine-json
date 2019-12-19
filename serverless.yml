@@ -1,0 +1,52 @@
+# This is the serverless deployment file of this repo to deploy into aws.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+service: takeon-combine-json-ingest # NOTE: update this with your service name
+#app: your-app-name
+#tenant: your-tenant-name
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+# frameworkVersion: "=X.X.X"
+frameworkVersion: ">=1.28.0 <2.0.0"
+provider:
+  name: aws
+  vpc:
+    securityGroupIds:
+      - ${file(./serverless-config.json):SECURITY_GROUP_ID}
+    subnetIds:
+      - ${file(./serverless-config.json):SUBNET_ID}
+  runtime: python3.7
+  region: eu-west-2
+  #stage: main
+  deploymentBucket: takeon.validation.deployment
+package:
+ exclude:
+  #  - ./**
+  #  - venv/**
+  #  - .vscode/**
+  #  - .cache/**
+  #  - test/**
+  #  - Docs/**
+   - node_modules/**
+   - .pytest_cache/**
+   - __pycache__/**
+functions:
+  main:
+    handler: handler.lambda_handler
+    role: ${file(./serverless-config.json):EXECUTION_ROLE_ARN}
+    environment:
+      INGEST_ZONE_BUCKET: ${file(./serverless-config.json):INGEST_ZONE_BUCKET}
+      INGEST_ZONE_QUEUE: ${file(./serverless-config.json):INGEST_ZONE_QUEUE}
+      ERROR_QUEUE_URL: ${file(./serverless-config.json):ERROR_QUEUE_URL}
+      BUSINESS_LAYER_ENDPOINT: ${file(./serverless-config.json):BUSINESS_LAYER_ENDPOINT}
+      INGESTION_OUTPUT_QUEUE : ${file(./serverless-config.json):INGESTION_OUTPUT_QUEUE}
+    vpc:
+      securityGroupIds:
+        - ${file(./serverless-config.json):SECURITY_GROUP_ID}
+      subnetIds:
+        - ${file(./serverless-config.json):SUBNET_ID}
+    timeout: 30
+    memorySize: 512
+    layers:
+      - arn:aws:lambda:eu-west-2:014669633018:layer:takeon-python-layer:2
